@@ -1,0 +1,37 @@
+$def with (imgs, text, form)
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>$text.title</title>
+  <meta name="description" content="Near Duplicate Survey">
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/jquery-ui.css">
+  <script src="/static/js/jquery.js"></script>
+  <script src="/static/js/jquery-ui.js"></script>
+  <script src="/static/js/interaction.js"></script>
+</head>
+<body>
+<h1>$text.title</h1>
+<div class="step1">
+    <p>$text.step1_desc</p>
+    $:form.render()
+</div>
+
+<p class="step2">$text.step2_desc</p>
+<p class="step3">$text.step3_desc</p>
+
+<ol id="images">
+$for img in imgs :
+    <li><img src="$img"/></li>
+</ol>
+
+<a id="step1" class="nav step1" href="#">Start</a>
+<a id="step2" class="nav step2" href="#">Next</a>
+<a id="step3" class="nav step3" href="#">Done</a>
+</body>
+</html>
+<html>
+
