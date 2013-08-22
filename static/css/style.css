@@ -6,8 +6,28 @@ body {
 
 h1 {
     font-size:2em;
-    margin:1em;
+    margin:1em 0;
 }
+
+div.question {
+    max-width:30em;
+    padding:0.5em;
+    margin-bottom:0.5em;
+}
+
+div.error {
+    border:thin solid red;
+}
+
+input[type=radio] {
+    margin-right: 0.5em;
+}
+
+//div.step1 input {
+//    display:block;
+//    clear:left;
+//    float:right;
+//}
 
 div.step1 {
     margin-bottom:3em;
@@ -63,9 +83,6 @@ label {
 }
 th {
     width: 15em;
-}
-input[type=radio] {
-    display:block-inline;
 }
 
 
