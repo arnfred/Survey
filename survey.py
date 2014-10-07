@@ -16,8 +16,10 @@ class survey:
 
     def GET(self) :
 
-		# Get images in imagefolder
+        # Get images in imagefolder
         imgdir = cycleFolder()
+        distractordir = "images/distractors"
+        MARK_DISTRACTORS = True
 
         # Set up web page form
         survey_form = form.form()
@@ -80,9 +82,15 @@ We expect you to spend 10 to 15 minutes for this task. If the quality of your wo
                 }
 
         # Collect images
-        imgs = [("/static/%s/%s" % (imgdir, i), "/static/%s/large/%s" %
-            (imgdir, i)) for i in os.listdir("static/%s/" % imgdir) if
+        reals = [("/static/%s/%s" % (imgdir, i), "/static/%s/large/%s" %
+            (imgdir, i), "real") for i in os.listdir("static/%s/" % imgdir) if
             i[-4:].lower() == ".jpg"]
+        distract_class = "distract" if MARK_DISTRACTORS == True else "real"
+        distractors = [("/static/%s/%s" % (distractordir, i), "/static/%s/large/%s" %
+            (distractordir, i), distract_class) for i in os.listdir("static/%s/" % distractordir) if
+            i[-4:].lower() == ".jpg"]
+        imgs = reals + distractors
+
         # Shuffle images to avoid bias
         random.shuffle(imgs)
         return self.render.survey(imgs, sections, survey_form)

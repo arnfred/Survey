@@ -9,16 +9,16 @@ $(function() {
     $( "." + currentStep[0] ).fadeIn("fast");
 
     // Go to next section when we click on nav button
-    $( ".next" ).on("click", function () { 
-        return next($(this).attr("id"), timestamps, currentStep); 
+    $( ".next" ).on("click", function () {
+        return next($(this).attr("id"), timestamps, currentStep);
     });
 
     // Make images selectable
     images()
 
     // Remove error box when we click on a radio field
-    $( "input[type=radio]" ).each(function(i,f) { $(f).on("click", function() { 
-        $(f).parents(".question").removeClass("error"); 
+    $( "input[type=radio]" ).each(function(i,f) { $(f).on("click", function() {
+        $(f).parents(".question").removeClass("error");
     }); });
 });
 
@@ -53,10 +53,10 @@ function next(step, timestamps, currentStep) {
 
     // Hide old
     $(".section").has(":visible").fadeOut("fast");
-    
+
     // Show new
     $("." + step).fadeIn("fast");
-	
+
 	// Update currentStep
 	currentStep[0] = step
 
@@ -71,9 +71,12 @@ function images() {
     // Make images selectable
     $( "#images li" ).each(function (index,e) { $(e).on("click",function(event,li) { $(e).toggleClass("selected"); }) })
 
+    // Preselect distractors (ONLY APPLICAPLE IF MARK_DISTRACTORS IS SET IN SURVEY.PY)
+    $( "#images li img.distract" ).parent().toggleClass("selected");
+
     // Make bigger image appear
-    $("li").each(function(i, li) { $(li).mouseover(function(e) { 
-        $("div#zoom img").attr('src',$(li).children("img").attr("src").replaceLast("/","/large/")); 
+    $("li").each(function(i, li) { $(li).mouseover(function(e) {
+        $("div#zoom img").attr('src',$(li).children("img").attr("src").replaceLast("/","/large/"));
     }); });
 }
 
@@ -120,7 +123,7 @@ function ImagesMakeSortable() {
 	// Store how many clicks
 	clicks = 0 // Yes, it's global. Sorry.
 	// Make images sortable
-	$( "#images ol" ).sortable({ tolerance: "pointer", items: ".item" }); 
+	$( "#images ol" ).sortable({ tolerance: "pointer", items: ".item" });
 	// Fade out not selected images
 	$( "#images li" ).not(".selected, .endings").remove();
 	// remove border
@@ -132,10 +135,10 @@ function ImagesMakeSortable() {
 		clicks += 1;
 	}) });
 	// Set width to full page
-	$( "#images ol" ).css("width","90%"); 
+	$( "#images ol" ).css("width","90%");
 	// Resize all images to half size
 	//$( "#images li" ).css("width", "150px");
-	$( "li.item img" ).each(function(i, img) { 
+	$( "li.item img" ).each(function(i, img) {
 		//$(img).css("width", $(img).width()/2.0);
 		$(img).css("cursor","move");
 	});
@@ -151,7 +154,7 @@ function furnishData(timestamps) {
 
     // Collect data from questions
     var groups = $.makeArray($("input:radio").map(function(i,e) { return $(e).attr("name"); })).unique();
-    questions = groups.map(function(n,i) { return { "name" : n, "value" : $("input[name=" + n + "]:checked").val() } }); 
+    questions = groups.map(function(n,i) { return { "name" : n, "value" : $("input[name=" + n + "]:checked").val() } });
 
     // Collect order of photos and collection name
     path_len = $("li.item img").filter(":visible").attr("src").split('/').length
@@ -174,7 +177,7 @@ function furnishData(timestamps) {
 		"window_x" : $(window).width(),
 		"window_y" : $(window).height(),
 		"mw_id" : getParameterByName("mw_id")
-		
+
     }
 
     // Send data to server
@@ -198,7 +201,7 @@ function showVoucher(data) {
         // Show voucher
         $("#voucher").html(data.responseText);
         $("#success").fadeIn("fast");
-    } 
+    }
     // If the result was a failure
     else {
         $("#failure").fadeIn("fast");
@@ -218,11 +221,11 @@ function formCheckErrors() {
     // Verify that form fields have been filled out
     var groups = $.makeArray($("input:radio").map(function(i,e) { return $(e).attr("name"); })).unique();
     // For each group, check that there is a buttom that has been checked
-    var tally = groups.map(function(n,i) { 
-        var field = $("input[name=" + n + "]"); 
+    var tally = groups.map(function(n,i) {
+        var field = $("input[name=" + n + "]");
         var noError = true;
-        if (!field.is(":checked")) { 
-            field.parents(".question").addClass("error"); 
+        if (!field.is(":checked")) {
+            field.parents(".question").addClass("error");
             $("#errorMsg").append("Error in question #" + (i+1) + "<br/>");
             noError = false;
         }
@@ -235,7 +238,7 @@ function formCheckErrors() {
 
 
 
-// Thanks to dextOr at 
+// Thanks to dextOr at
 // http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
