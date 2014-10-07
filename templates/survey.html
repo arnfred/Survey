@@ -1,39 +1,81 @@
-$def with (imgs, text, form)
+$def with (imgs, sections, form)
 
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>$text.title</title>
-  <meta name="description" content="Near Duplicate Survey">
+  <title>$sections.page_title</title>
+  <meta name="description" content="Slideshow Survey">
   <link rel="stylesheet" href="/static/css/style.css">
   <link rel="stylesheet" href="/static/css/jquery-ui.css">
   <script src="/static/js/jquery.js"></script>
   <script src="/static/js/jquery-ui.js"></script>
+  <script src="/static/js/json2.js"></script>
   <script src="/static/js/util.js"></script>
   <script src="/static/js/interaction.js"></script>
 </head>
 <body>
-<h1>$text.title</h1>
-<div class="step1">
-    <p>$text.step1_desc</p>
+
+$for i,k in enumerate(sections.keys) :
+    <div class="$k section">
+        <h1>$sections.title[k]</h1>
+        $:sections.desc[k]
+        $if i != len(sections.keys) - 1 :
+            <a id="$sections.keys[i+1]" class="$k next" href="#">Next</a>
+    </div>
+
+<p id="errorMsg" class="red bold"></p>
+
+<div id="form" class="intro3 section">
     <form>
         $:form.render()
     </form>
+    <a id="step1" class="step1 next" href="#">Next</a>
 </div>
 
-<p class="step2">$text.step2_desc</p>
-<p class="step3">$text.step3_desc</p>
+<div class="step1 section">
+	<h3>Please explain here why you picked the images you picked:</h3>
+	<form>
+        <textarea id="question_pick" rows="4" cols="50"></textarea>
+    </form>
+</div>
 
-<ol id="images">
-$for img in imgs :
-    <li><img src="$img"/></li>
-</ol>
+<div id="images" class="step1 step2 section">
+    <div>
+        <ol>
+            <li class="beginning endings"><img src="/static/beginning.jpg"/></li>
+            $for img in imgs :
+                <li class="item"><img src="$img[0]"/></li>
+            <li class="ending endings"><img src="/static/ending.jpg"/></li>
+        </ol>
+        <div id="zoom" class="step1 section">
+            <img src="$imgs[0][1]"/>
+        </div>
+    </div>
 
-<p id="errorMsg"></p>
-<a id="step1" class="nav step1" href="#">Start</a>
-<a id="step2" class="nav step2" href="#">Next</a>
-<a id="step3" class="nav step3" href="#">Done</a>
+</div>
+
+
+
+<div class="step2 section">
+	<h3>Please explain why you choose to arrange the images in this order:</h3>
+	<form>
+        <textarea id="question_order" rows="4" cols="50"></textarea>
+    </form>
+</div>
+
+<div id="success" class="section">
+    <h3 id="voucher"></h3>
+    <p>Here is your personal unique code. Write it down. Go to <a href="http://microworkers.com">microworkers.com</a> and use it for redeeming. Each code can be used only once.!</p>
+</div>
+
+<div id="failure" class="section">
+    <p>Due to an internal server error, your voucher could not be generated.</p>
+</div>
+
+<div id"waiting" class="section">
+    <p>Please wait while your data is being verified and the redemption code is fetched from the server</p>
+</div>
 </body>
 </html>
 <html>
