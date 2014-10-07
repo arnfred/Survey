@@ -11,11 +11,11 @@ import hashlib
 import time
 
 # Handler for root path
-class survey:        
+class survey:
     render = web.template.render('templates/')
 
     def GET(self) :
-	
+
 		# Get images in imagefolder
         imgdir = cycleFolder()
 
@@ -44,7 +44,7 @@ class survey:
                 "step2" : "Step2: Sequence photos",
                 "done" : "Finished",
                 }
-				
+
         def step1_select() :
             d = "unassigned"
             print(imgdir)
@@ -68,19 +68,7 @@ class survey:
 We expect you to spend 10 to 15 minutes for this task. If the quality of your work is adequate, you will be awarded 0.2$ from the Microworkers crowdsourcing platform. If you are really committed and the quality of your work is very good, you will get a BONUS of 0.2$ (total 0.4$).</p>
 <p>Click NEXT for a thorough description of the task.</p>""",
 
-				"intro2" : """<img src="/static/description.jpg" />""",
-                "intro2-bak" : """<p>Your aim is to <span class='underline'>create a slideshow for a specific person</span>. <br/><br/>
-Imagine that <span class='underline'>this person is important toy you</span> (e.g. your best friend, girlfriend/boyfriend, daughter/son etc.) and you would like to create a slideshow about him/her.<br/><br/>
-Think about the following scenario: Some friends are visiting and you would like to show them photos of this person, so, you compile a slideshow about him/her.<br/><br/>
-The task has 3 sections:</p>
-<img class="content" src='/static/pic.png'/>
-<h4>Step1: Select photos</h2>
-<p>You will be presented with 60 images. All images will portray a specific person (or a couple) in various moments or activities. Your aim is to <span class='underline'>choose any</span> images that you think are appropriate to be used in a slideshow. There is no restriction on the number of images that you can select. Select any photos that you like by simply clicking on them. A <span class='red'>red border</span> will appear around each image that you have clicked. This means that it is selected. If you click again on them, you will deselect them and the <span class="red">red border</span> will disappear. <span class='bold'>Remember that your aim is to use these photos in order to create a slideshow for this person</span>. Once you are ready, click Next.</p>
-<h4>Step2: Sequence photos</h2>
-<p>You will be presented with the images that you selected in Step1. Your aim is to <span class='underline'>rearrange the photos into a sequence</span> that you think is good for describing the person depicted. You can just drag the images and rearrange their order. Remember that your aim is to create a good sequence (according to your personal taste) that is appropriate for representing this particular person. Once you are done, click Next</p>
-<h4>Step3: Finished!</h2>
-<p>Once you have finished, a unique code will be generated for you. Write down this code! You will need it in order to get paid for the task that you have just performed. Go to the MicroWorkers website and use this code in order to redeem your 1$ payment!</p>
-<p>If you are ready, click Next and the test will begin!</p>""",
+                "intro2" : """<img src="/static/description.jpg" />""",
 
                 "intro3" : """<p>Before you will continue to the test, we would like to know some more things about you, which is necessary for our survey. Please take some time to answer the following questions (it's totally anonymous).</p>""",
 
@@ -92,10 +80,10 @@ The task has 3 sections:</p>
                 }
 
         # Collect images
-        imgs = [("/static/%s/%s" % (imgdir, i), "/static/%s/large/%s" % 
-            (imgdir, i)) for i in os.listdir("static/%s/" % imgdir) if 
+        imgs = [("/static/%s/%s" % (imgdir, i), "/static/%s/large/%s" %
+            (imgdir, i)) for i in os.listdir("static/%s/" % imgdir) if
             i[-4:].lower() == ".jpg"]
-        # Shuffle images to avoid bias			
+        # Shuffle images to avoid bias
         random.shuffle(imgs)
         return self.render.survey(imgs, sections, survey_form)
 
@@ -109,7 +97,7 @@ The task has 3 sections:</p>
         # Get data
         questions = "[%s]" % "; ".join(map(lambda d : str(d['value']), data['questions']))
         photo_order = "[%s]" % "; ".join(map(str,data['photo_order']))
-			
+
         time_diffs = map(lambda td : "(%s: %s)" % (td['name'], td['time']), data['time_diffs'][1:])
         window_dimensions = [data['window_x'], data['window_y']]
         mw_id = data['mw_id']

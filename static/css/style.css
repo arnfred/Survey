@@ -26,8 +26,9 @@ form {
     margin: 2em 0;
 }
 
-div.section p {
+div.section p, img.content, .section h3 {
     max-width:600px;
+	width:50%;
 }
 
 .underline {
@@ -38,9 +39,6 @@ div.section p {
 }
 .red {
     color:#aa0000;
-}
-img.content {
-    max-width:600px;
 }
 
 .section {
