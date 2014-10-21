@@ -2,7 +2,7 @@ $(function() {
 
     // Get init timestamp
     var timestamps = [];
-	var currentStep = ["intro1"]
+    var currentStep = ["intro1"]
     addTimeStamp(timestamps, currentStep[0])
 
     // Show first intro text
@@ -35,19 +35,19 @@ function next(step, timestamps, currentStep) {
 
     // Check that enough images have been selected
     if (step == "step2") {
-		if (!ImagesCheckErrors()) {
-			return false;
-		}
-		else {
-			ImagesMakeSortable();
-		}
+        if (!ImagesCheckErrors()) {
+            return false;
+        }
+        else {
+            ImagesMakeSortable();
+        }
     }
 
     // Save data and furnish code
     if (step == "done") {
-		if (!sortingCheckErrors()) {
-			return false;
-		}
+        if (!sortingCheckErrors()) {
+            return false;
+        }
         furnishData(timestamps)
     }
 
@@ -57,8 +57,8 @@ function next(step, timestamps, currentStep) {
     // Show new
     $("." + step).fadeIn("fast");
 
-	// Update currentStep
-	currentStep[0] = step
+    // Update currentStep
+    currentStep[0] = step
 
     // Cancel normal click event
     return false;
@@ -96,17 +96,17 @@ function ImagesCheckErrors() {
         $("#errorMsg").append("You need to select more images<br/>");
         return false;
     }
-	else if ($("#question_pick").val() == "") {
+    else if ($("#question_pick").val() == "") {
         $("#errorMsg").append("You need to add text in the text area<br/>");
         return false;
     }
     else {
-		return true
-	}
+	return true
+    }
 }
 
 function sortingCheckErrors() {
-	// Clear error messages
+    // Clear error messages
     $("#errorMsg").html("");
 
     // Check that we have some text in the box
@@ -115,37 +115,37 @@ function sortingCheckErrors() {
         return false;
     }
     else {
-		return true
-	}
+        return true
+    }
 }
 
 function ImagesMakeSortable() {
-	// Store how many clicks
-	clicks = 0 // Yes, it's global. Sorry.
-	// Make images sortable
-	$( "#images ol" ).sortable({ tolerance: "pointer", items: ".item" });
-	// Fade out not selected images
-	$( "#images li" ).not(".selected, .endings").remove();
-	// remove border
-	$( "#images li" ).removeClass("selected")
-	// remove click event
-	$( "#images li" ).each(function (index,e) { $(e).off() });
-	// count clicks
-	$( "#images li" ).each(function (index,e) { $(e).on("mousedown", function() {
-		clicks += 1;
-	}) });
-	// Set width to full page
-	$( "#images ol" ).css("width","90%");
-	// Resize all images to half size
-	//$( "#images li" ).css("width", "150px");
-	$( "li.item img" ).each(function(i, img) {
-		//$(img).css("width", $(img).width()/2.0);
-		$(img).css("cursor","move");
-	});
-	// increasing margin
+    // Store how many clicks
+    clicks = 0 // Yes, it's global. Sorry.
+    // Make images sortable
+    $( "#images ol" ).sortable({ tolerance: "pointer", items: ".item" });
+    // Fade out not selected images
+    $( "#images li" ).not(".selected, .endings").remove();
+    // remove border
+    $( "#images li" ).removeClass("selected")
+    // remove click event
+    $( "#images li" ).each(function (index,e) { $(e).off() });
+    // count clicks
+    $( "#images li" ).each(function (index,e) { $(e).on("mousedown", function() {
+        clicks += 1;
+    }) });
+    // Set width to full page
+    $( "#images ol" ).css("width","90%");
+    // Resize all images to half size
+    //$( "#images li" ).css("width", "150px");
+    $( "li.item img" ).each(function(i, img) {
+        //$(img).css("width", $(img).width()/2.0);
+        $(img).css("cursor","move");
+    });
+    // increasing margin
 
-	// Show start and end list items
-	$( ".endings" ).fadeIn("fast");
+    // Show start and end list items
+    $( ".endings" ).fadeIn("fast");
 
 }
 
@@ -170,13 +170,13 @@ function furnishData(timestamps) {
         "photo_order" : photos,
         "collection" : collection,
         "time_diffs" : time_diffs,
-		"clicks" : clicks, // global variable defined in makeImagesSortable
-		//"begin_time" : timestamps[0],
-		"question_pick" : $("#question_pick").val(),
-		"question_order" : $("#question_order").val(),
-		"window_x" : $(window).width(),
-		"window_y" : $(window).height(),
-		"mw_id" : getParameterByName("mw_id")
+        "clicks" : clicks, // global variable defined in makeImagesSortable
+        //"begin_time" : timestamps[0],
+        "question_pick" : $("#question_pick").val(),
+        "question_order" : $("#question_order").val(),
+        "window_x" : $(window).width(),
+        "window_y" : $(window).height(),
+        "mw_id" : getParameterByName("mw_id")
 
     }
 
